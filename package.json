@@ -2,9 +2,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
-    },
+  },
   "dependencies": {
     "dotenv": "^8.0.0",
+    "node-cron": "^2.0.3",
     "node-telegram-bot-api": "^0.30.0"
   }
 }
