@@ -1,10 +1,14 @@
 var cron = require('node-cron');
-exports.cron = (bot) => {
-    cron.schedule('* * * * *', () => {
-        console.log('running a task every minute');
+module.exports = (bot, firebase) => {
+    cron.schedule('1 6 * * 1-6', () => {
+        hojeEDiaDiario( bot, firebase )
     });
 }
 
-function hojeEDiaDiario(bot){
-
+async function hojeEDiaDiario(bot, firebase){
+    const chats = await firebase.getChatsPrivate()
+    console.warn(chats)
+    chats.forEach(chat => {
+        bot.sendMessage(chat.id, 'BOM DIA CLÃ!!!!')
+    });
 }
