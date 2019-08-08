@@ -10,6 +10,11 @@ module.exports = (bot, firebase) => {
     }, {
             timezone: "America/Sao_Paulo"
         });
+    cron.schedule('1 15 * * 1-5', () => {
+        aiDentuDiario(bot, firebase)
+    }, {
+            timezone: "America/Sao_Paulo"
+        });
     cron.schedule('30 17 * * 1-5', () => {
         duasHojeDiario(bot, firebase)
     }, {
@@ -23,7 +28,7 @@ module.exports = (bot, firebase) => {
 }
 
 async function hojeEDiaDiario(bot, firebase) {
-    const chats = await firebase.getChatsGroup()
+    const chats = await firebase.getChatsGroupAndSuperGroup()
     chats.forEach(async chat => {
         await bot.sendMessage(chat.id, 'BOM DIA CLÃ!!!!')
         await bot.sendMessage(chat.id, 'HOJE')
@@ -34,19 +39,19 @@ async function hojeEDiaDiario(bot, firebase) {
 }
 
 async function aiDentuDiario(bot, firebase) {
-    const chats = await firebase.getChatsGroup()
+    const chats = await firebase.getChatsGroupAndSuperGroup()
     chats.forEach(async chat => {
         await bot.sendMessage(chat.id, 'AI DENTU!')
     });
 }
 async function duasHojeDiario(bot, firebase) {
-    const chats = await firebase.getChatsGroup()
+    const chats = await firebase.getChatsGroupAndSuperGroup()
     chats.forEach(async chat => {
         await bot.sendMessage(chat.id, 'DUDU DUAS HOJE? DUAS HOJE, BORA?')
     });
 }
 async function nuncaMaisEuBebo(bot, firebase) {
-    const chats = await firebase.getChatsGroup()
+    const chats = await firebase.getChatsGroupAndSuperGroup()
     chats.forEach(async chat => {
         await bot.sendMessage(chat.id, 'NÃO BEBAM!')
     });
