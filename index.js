@@ -11,16 +11,15 @@ const firebase = new FirebaseUtil(db)
 const bot = new TelegramBot( process.env.BOT_TOKEN, { polling: true } )
 cron(bot, firebase)
 
-
 bot.on('message', (msg) => {
     const chatId = msg.chat.id;
     const text =  util.retiraAcentos(msg.text).toLowerCase()
-    
+
     firebase.checkAndSaveNewChat(msg.chat)
 
     if(text.search('duas') != -1 && text.search('hoje') != -1 ){
         messages.msgDuasHoje(chatId, bot)
     }else{
-        messages.msg150PorCento(chatId, bot)
+        messages.chance5PorCentoAiDentu(chatId, bot)
     }
 })

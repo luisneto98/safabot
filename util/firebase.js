@@ -19,4 +19,8 @@ module.exports = class FirebaseUtil {
         var docRef = await this.client.collection('chat_private');
         return docRef.get()
     }
+    async getChatsGroup() {
+        var docRef = await this.client.collection('chat_group');
+        return docRef.get()
+    }
 }
