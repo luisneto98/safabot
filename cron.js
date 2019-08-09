@@ -7,8 +7,8 @@ module.exports = (bot, firebase) => {
     }, {
             timezone: "America/Sao_Paulo"
     });
-    cron.schedule('1 22 * * 1-5', () => {
-        hojeEDiaDiario(bot, firebase)
+    cron.schedule('15 22 * * 1-5', () => {
+        amanhaEDiaDiario(bot, firebase)
     }, {
             timezone: "America/Sao_Paulo"
     });
@@ -41,6 +41,9 @@ async function enviarParaTodosTiposGrupos(functionMessage, bot, firebase){
 }
 async function hojeEDiaDiario(bot, firebase) {
     enviarParaTodosTiposGrupos(messages.hojeEDia,bot,firebase);
+}
+async function amanhaEDiaDiario(bot, firebase) {
+    enviarParaTodosTiposGrupos(messages.amanhaEDia,bot,firebase);
 }
 async function aiDentuDiario(bot, firebase) {
     enviarParaTodosTiposGrupos(messages.idDentu,bot,firebase);
