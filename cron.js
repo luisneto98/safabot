@@ -1,58 +1,53 @@
-var cron = require('node-cron');
+const messages = require('./messages');
+const cron = require('node-cron');
+
 module.exports = (bot, firebase) => {
     cron.schedule('30 6 * * 1-5', () => {
         hojeEDiaDiario(bot, firebase)
     }, {
             timezone: "America/Sao_Paulo"
-        });
+    });
+    cron.schedule('1 22 * * 1-5', () => {
+        hojeEDiaDiario(bot, firebase)
+    }, {
+            timezone: "America/Sao_Paulo"
+    });
     cron.schedule('1 14 * * 1-5', () => {
         aiDentuDiario(bot, firebase)
     }, {
             timezone: "America/Sao_Paulo"
-        });
+    });
     cron.schedule('1 15 * * 1-5', () => {
         aiDentuDiario(bot, firebase)
     }, {
             timezone: "America/Sao_Paulo"
-        });
+    });
     cron.schedule('30 17 * * 1-5', () => {
         duasHojeDiario(bot, firebase)
     }, {
             timezone: "America/Sao_Paulo"
-        });
+    });
     cron.schedule('30 8 * * 6', () => {
-        nuncaMaisEuBebo(bot, firebase)
+        naoBebam(bot, firebase)
     }, {
             timezone: "America/Sao_Paulo"
-        });
+    });
 }
-
+async function enviarParaTodosTiposGrupos(functionMessage, bot, firebase){
+    var chatsGroup = await firebase.getChatsGroup()
+    chatsGroup.forEach(async (chat) => functionMessage(chat,bot));
+    var chatsSuperGroup = await firebase.getChatsSuperGroup()
+    chatsSuperGroup.forEach(async (chat) => functionMessage(chat,bot));
+}
 async function hojeEDiaDiario(bot, firebase) {
-    const chats = await firebase.getChatsGroupAndSuperGroup()
-    chats.forEach(async chat => {
-        await bot.sendMessage(chat.id, 'BOM DIA CLÃ!!!!')
-        await bot.sendMessage(chat.id, 'HOJE')
-        await bot.sendMessage(chat.id, 'É')
-        await bot.sendMessage(chat.id, 'DIA!!!!')
-        await bot.sendMessage(chat.id, 'JÁ TÔ NA BLACKSWAN')
-    });
+    enviarParaTodosTiposGrupos(messages.hojeEDia,bot,firebase);
 }
-
 async function aiDentuDiario(bot, firebase) {
-    const chats = await firebase.getChatsGroupAndSuperGroup()
-    chats.forEach(async chat => {
-        await bot.sendMessage(chat.id, 'AI DENTU!')
-    });
+    enviarParaTodosTiposGrupos(messages.idDentu,bot,firebase);
 }
 async function duasHojeDiario(bot, firebase) {
-    const chats = await firebase.getChatsGroupAndSuperGroup()
-    chats.forEach(async chat => {
-        await bot.sendMessage(chat.id, 'DUDU DUAS HOJE? DUAS HOJE, BORA?')
-    });
+    enviarParaTodosTiposGrupos(messages.duasHojeBora,bot,firebase);
 }
-async function nuncaMaisEuBebo(bot, firebase) {
-    const chats = await firebase.getChatsGroupAndSuperGroup()
-    chats.forEach(async chat => {
-        await bot.sendMessage(chat.id, 'NÃO BEBAM!')
-    });
+async function naoBebam(bot, firebase) {
+    enviarParaTodosTiposGrupos(messages.naoBebam,bot,firebase);
 }

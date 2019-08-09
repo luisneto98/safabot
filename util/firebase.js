@@ -23,13 +23,8 @@ module.exports = class FirebaseUtil {
         var docRef = await this.client.collection('chat_group');
         return docRef.get()
     }
-    async getChatsGroupAndSuperGroup() {
-        var docRefGroup = await this.client.collection('chat_group');
-        var docRefSuperGroup = await this.client.collection('chat_supergroup');
-        
-        var groups = await docRefGroup.get()
-        var supergroups = await docRefSuperGroup.get()
-        
-        return groups.concat(supergroups)
+    async getChatsSuperGroup() {
+        var docRef = await this.client.collection('chat_supergroup');
+        return docRef.get()
     }
 }
